@@ -13,7 +13,6 @@ class UserAskAdmin(object):
     list_filter = ['name', 'mobile', 'course_name', 'add_time']
 
 
-#
 class UserCourseAdmin(object):
     '''用户课程学习'''
 
