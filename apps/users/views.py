@@ -2,8 +2,10 @@ from django.shortcuts import render
 from django.contrib.auth import authenticate,login
 from django.contrib.auth.backends import ModelBackend
 from django.db.models import Q
+from django.views.generic.base import View
 
 from .models import UserProfile
+from .forms import LoginForm
 
 class CustomBackend(ModelBackend):
     def authenticate(self, request, username=None, password=None, **kwargs):
@@ -14,25 +16,22 @@ class CustomBackend(ModelBackend):
         except Exception as e:
             return None
 
-
-
-
-# Create your views here.
-def user_login(request):
-    print(request.method)
-    if request.method == 'POST':
-        username = request.POST.get('username','')
-        password = request.POST.get('password','')
-        print(username)
-        print(password)
-        user = authenticate(username=username,password=password)
-        if user is not None:
-            login(request,user)
-            return render(request,'index.html')
+class LoginView(View):
+    def get(self,request):
+        return render(request, 'login.html')
+    def post(self,request):
+        login_form = LoginForm(request.POST)
+        if login_form.is_valid():
+            username = request.POST.get('username','')
+            password = request.POST.get('password','')
+            user = authenticate(username=username,password=password)
+            if user is not None:
+                login(request,user)
+                return render(request,'index.html')
+            else:
+                return render(request, 'login.html', {'msg': '用户名或密码错误'})
         else:
-            return render(request,'login.html',{'msg':'用户名或密码错误'})
-    elif request.method == 'GET':
-        return render(request,'login.html')
+            return render(request,'login.html',{'login_form':login_form})
 
 def index(request):
     return render(request,'index.html')

@@ -1,8 +1,8 @@
 from django.conf.urls import url
-
-from .views import user_login,index
+from django.contrib.sessions.middleware import SessionMiddleware
+from .views import index,LoginView
 
 urlpatterns = [
-    url(r'^login/$',user_login,name='login'),
+    url(r'^login/$',LoginView.as_view(),name='login'),
     url(r'^$',index,name='index'),
 ]
