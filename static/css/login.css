@@ -271,7 +271,7 @@ a:hover{
 }
 .captcha1 > img{
     float:right;
-    margin-top:5px;
+    margin-top:1px;
 }
 .verify-code{
     float:left;

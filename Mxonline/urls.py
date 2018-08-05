@@ -18,5 +18,6 @@ from extra_apps import xadmin
 
 urlpatterns = [
     url(r'^xadmin/', xadmin.site.urls),
+    url(r'^captcha/', include('captcha.urls')),
     url(r'', include('users.urls',namespace='users')),
 ]

@@ -50,8 +50,10 @@ INSTALLED_APPS = [
     'courses',
     'organization',
     'operation',
+    'utils',
     'xadmin',
     'crispy_forms',
+    'captcha',
 ]
 
 AUTH_USER_MODEL = 'users.UserProfile'
