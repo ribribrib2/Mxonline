@@ -15,6 +15,11 @@ class ForgetForm(forms.Form):
     email = forms.EmailField(required=True)
     captcha = CaptchaField(error_messages={'invalid':'验证码错误'})
 
+class PasswordModifyForm(forms.Form):
+    password_new1 = forms.CharField(required=True, min_length=8)
+    password_new2 = forms.CharField(required=True, min_length=8)
+
 class PasswordResetForm(forms.Form):
-    password = forms.CharField(required=True, min_length=8)
-    password2 = forms.CharField(required=True, min_length=8)
+    password_old = forms.CharField(required=True, min_length=8)
+    password_new1 = forms.CharField(required=True, min_length=8)
+    password_new2 = forms.CharField(required=True, min_length=8)

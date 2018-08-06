@@ -7,7 +7,7 @@ from django.views.generic.base import View
 from utils.email_send import SendEmail
 
 from .models import UserProfile,EmailVerifyRecord
-from .forms import LoginForm,RegisterForm,ForgetForm,PasswordResetForm
+from .forms import LoginForm,RegisterForm,ForgetForm,PasswordModifyForm,PasswordResetForm
 
 
 #邮箱和用户名都可以登录
@@ -24,10 +24,10 @@ class CustomBackend(ModelBackend):
         except Exception as e:
             return None
 
-
+#主页
 class IndexView(View):
     def get(self,request):
-        return render(request, 'email_send.html')
+        return render(request, 'index.html')
 
 
 #登录
@@ -59,23 +59,31 @@ class LoginView(View):
             return render(request,'login.html',{'login_form':login_form})
 
 
+#登出
 class LogoutView(View):
+    '''用户登出'''
+
     def get(self,request):
         logout(request)
         return redirect(reverse('users:login'))
 
 
+#注册
 class RegisterView(View):
+    '''用户注册'''
+
     def get(self,request):
         register_form = RegisterForm()
         return render(request,'register.html',{'register_form':register_form})
+
     def post(self,request):
         register_form = RegisterForm(request.POST)
         if register_form.is_valid():
             user_email = request.POST.get('email',None)
-            user_password = request.POST.get('password',None)
+            #如果该账号已经注册,报错
             if UserProfile.objects.filter(email=user_email):
                 return render(request, 'register.html',{'register_form':register_form,'error_message':'该账号已经注册'})
+            user_password = request.POST.get('password', None)
             user_profile = UserProfile()
             user_profile.username = user_email
             user_profile.email = user_email
@@ -83,65 +91,106 @@ class RegisterView(View):
             user_profile.is_active = False
             user_profile.save()
             SendEmail(user_email,'register')
-            return render(request, 'email_send.html')
+            return render(request, 'email-send.html', {'email':user_email})
         else:
             return render(request,'register.html',{'register_form':register_form})
 
 
-class ActiveUserView(View):
-    def get(self,request,active_code):
-        record = EmailVerifyRecord.objects.get(code=active_code)
-        if record and record.is_active == True:
-            record.is_active = False
-            record.save()
-            email = record.email
-            user = UserProfile.objects.get(email=email)
-            user.is_active = True
-            user.save()
-        return render(request,'login.html')
+#忘记密码
+class PasswordForgetView(View):
+    '''忘记密码'''
 
-
-class ForgetView(View):
     def get(self,request):
         forget_form = ForgetForm()
         return render(request,'forgetpwd.html',{'forget_form':forget_form})
+
     def post(self,request):
         forget_form = ForgetForm(request.POST)
         if forget_form.is_valid():
             user_email = request.POST.get('email',None)
-            if UserProfile.objects.filter(email=user_email) is None:
-                return render(request, 'forgetpwd.html', {'forget_form': forget_form,'error_message':'该账号未注册'})
-            SendEmail(user_email, 'forget')
-            return HttpResponse('邮件已经发送')
+            #Query不为空返回Ture
+            if UserProfile.objects.filter(email=user_email).exists():
+                SendEmail(user_email, 'forget')
+                return render(request,'email-send.html',{'email':user_email})
+            return render(request, 'forgetpwd.html', {'forget_form': forget_form,'error_message':'该账号未注册'})
         else:
             return render(request, 'forgetpwd.html',{'forget_form':forget_form})
 
 
+# 重置密码
 class PasswordResetView(View):
-    def get(self,request,passwordreset_code):
-        passwordResetCode =  EmailVerifyRecord.objects.get(code=passwordreset_code)
-        if passwordResetCode and passwordResetCode.is_active == True:
-            passwordResetCode.is_active = False
-            passwordResetCode.save()
-            passwordreset_form = PasswordResetForm()
-            email = passwordResetCode.email
-            return render(request, 'password_reset.html',{'passwordreset_form':passwordreset_form,'email':email,'password_modify_status':False})
+    '''重置密码'''
+
+    def get(self,request):
+        passwordreset_form = PasswordResetForm()
+        return render(request,'password_reset.html',{'passwordreset_form':passwordreset_form})
+
+    def post(self,request):
+        passwordreset_form = PasswordResetForm(request.POST)
+        if passwordreset_form.is_valid():
+            password_old = request.POST.get('password_old','')
+            password_new1 = request.POST.get('password_new1','')
+            password_new2 = request.POST.get('password_new2','')
+            user_email = request.POST.get('email','')
+            user = UserProfile.objects.get(email=user_email)
+            if make_password(password_old) != make_password(user.password):
+                return render(request, 'password_reset.html',{'passwordreset_form': passwordreset_form, 'meg': '旧密码错误'})
+            elif password_new1 != password_new2:
+                return render(request,'password_reset.html',{'passwordreset_form':passwordreset_form,'meg':'两次密码不一样'})
+            else:
+                user.password = make_password(password_new1)
+                user.save()
+                logout(request)
+                return HttpResponse('密码修改成功,请重新登录')
+        else:
+            return render(request,'password_reset.html',{'passwordreset_form':passwordreset_form})
+
+
+#邮箱链接验证
+class EmailVerifyView(View):
+    def get(self,request,verify_record):
+        try:
+            record =  EmailVerifyRecord.objects.get(code=verify_record)
+        except Exception as e:
+            record = None
+        if record:
+            if record.send_type == 'forget':
+                if record.is_active == True:
+                    record.is_active = False
+                    record.save()
+                    passwordmodify_form = PasswordModifyForm()
+                    email = record.email
+                    return render(request, 'password-modify.html',{'passwordmodify_form':passwordmodify_form,'email':email,'password_modify_status':False})
+                else:
+                    return HttpResponse('该链接无效')
+            elif record.send_type == 'register':
+                if record.is_active == True:
+                    record.is_active = False
+                    record.save()
+                    email = record.email
+                    user = UserProfile.objects.get(email=email)
+                    user.is_active = True
+                    user.save()
+                    return render(request, 'email-verify.html', {'verify_status': True})
+                else:
+                    return render(request, 'email-verify.html', {'verify_status': False})
         else:
             return HttpResponse('该链接无效')
 
 
+#修改密码
 class ModifyPwdView(View):
     def post(self,request):
-        passwordreset_form = PasswordResetForm(request.POST)
+        passwordmodify_form = PasswordModifyForm(request.POST)
         email = request.POST.get('email', None)
-        if passwordreset_form.is_valid():
-            password = request.POST.get('password', None)
-            password2 = request.POST.get('password2', None)
-            if password != password2:
+        if passwordmodify_form.is_valid():
+            password_new1 = request.POST.get('password_new1', None)
+            password_new2 = request.POST.get('password_new2', None)
+            if password_new1 != password_new2:
                 render(request,'password_reset.html',{'error_message':'两次输入密码不一样'})
             user = UserProfile.objects.get(email=email)
-            user.password = make_password(password)
+            user.password = make_password(password_new1)
             user.save()
             return render(request,'password_reset.html',{'password_modify_status':True})
         else:
-            return render(request, 'password_reset.html', {'passwordreset_form': passwordreset_form,'email':email,'password_modify_status':False})
+            return render(request, 'password_reset.html', {'passwordmodify_form': passwordmodify_form,'email':email,'password_modify_status':False})
