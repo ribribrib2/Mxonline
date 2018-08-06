@@ -15,9 +15,17 @@ Including another URLconf
 """
 from django.conf.urls import url,include
 from extra_apps import xadmin
+from django.conf.urls.static import static
+from django.conf import settings
+
+from users.views import IndexView
 
 urlpatterns = [
     url(r'^xadmin/', xadmin.site.urls),
     url(r'^captcha/', include('captcha.urls')),
     url(r'', include('users.urls',namespace='users')),
+    url(r'^$', IndexView.as_view(), name='index'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

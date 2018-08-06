@@ -24,26 +24,26 @@
     <h1>重新设置密码</h1>
     <div class="close jsCloseDialog"><img src="{% static 'images/dig_close.png' %}"/></div>
     <p class="green">请输入新密码</p>
-    <form id="jsSetNewPwdForm" action="{% url 'users:password_reset' '' %}" method="post">
-        <div class="box">
-            <span class="word2">密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码</span>
-            <input type="password" name="password" id="jsResetPwd" placeholder="请输入新密码"/>
-        </div>
-        <div class="box">
-            <span class="word2">确&nbsp;认&nbsp;密&nbsp;码</span>
-            <input type="password" name="password2" id="jsResetPwd2" placeholder="请再次输入新密码"/>
-        </div>
-        <div class="box">
-            <span class="word2">验&nbsp;&nbsp;证&nbsp;&nbsp;码</span>
-            <input type="text" name="code" id="jsResetCode" placeholder="请输入手机验证码"/>
-        </div>
-        <div class="error btns" id="jsSetNewPwdTips"></div>
-        <div class="button">
-            <input type="hidden" name="mobile" id="jsInpResetMobil" />
-            <input id="jsSetNewPwdBtn" type="button" value="提交" />
-        </div>
-        {% csrf_token %}
-    </form>
+{#    <form id="jsSetNewPwdForm" action="{% url 'users:password_reset' %}" method="post">#}
+{#        <div class="box">#}
+{#            <span class="word2">密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码</span>#}
+{#            <input type="password" name="password" id="jsResetPwd" placeholder="请输入新密码"/>#}
+{#        </div>#}
+{#        <div class="box">#}
+{#            <span class="word2">确&nbsp;认&nbsp;密&nbsp;码</span>#}
+{#            <input type="password" name="password2" id="jsResetPwd2" placeholder="请再次输入新密码"/>#}
+{#        </div>#}
+{#        <div class="box">#}
+{#            <span class="word2">验&nbsp;&nbsp;证&nbsp;&nbsp;码</span>#}
+{#            <input type="text" name="code" id="jsResetCode" placeholder="请输入手机验证码"/>#}
+{#        </div>#}
+{#        <div class="error btns" id="jsSetNewPwdTips"></div>#}
+{#        <div class="button">#}
+{#            <input type="hidden" name="mobile" id="jsInpResetMobil" />#}
+{#            <input id="jsSetNewPwdBtn" type="button" value="提交" />#}
+{#        </div>#}
+{#        {% csrf_token %}#}
+{#    </form>#}
 </div>
 <div class="bg" id="dialogBg"></div>
 <header>
@@ -62,9 +62,9 @@
     <div class="c-box bg-box">
         <div class="login-box clearfix">
             <div class="hd-login clearfix">
-                <a class="index-logo" href="index.html"></a>
+                <a class="index-logo" href="{% url 'users:forget' %}"></a>
                 <h1>忘记密码</h1>
-                <a class="index-font" href="index.html">回到首页</a>
+                <a class="index-font" href="{% url 'index' %}">回到首页</a>
             </div>
             <div class="fl slide">
                 <div class="imgslide">

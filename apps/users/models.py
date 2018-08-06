@@ -22,6 +22,7 @@ class EmailVerifyRecord(models.Model):
     email = models.EmailField('邮箱')
     send_type = models.CharField('类型',choices=(('register','注册'),('forget','找回密码')),max_length=20)
     send_time = models.DateTimeField('发送时间',auto_now_add=True)
+    is_active = models.BooleanField('是否有效')
 
     class Meta:
         verbose_name = '验证码'

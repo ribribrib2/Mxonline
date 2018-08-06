@@ -20,6 +20,7 @@ def SendEmail(email,send_type = 'register'):
     email_verifyrecied.code = random_str(16)
     email_verifyrecied.email = email
     email_verifyrecied.send_type = send_type
+    email_verifyrecied.is_active = True
     email_verifyrecied.save()
 
     if send_type == 'register':
