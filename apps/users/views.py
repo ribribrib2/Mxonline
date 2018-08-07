@@ -1,3 +1,5 @@
+import json
+
 from django.shortcuts import render,HttpResponse,redirect,reverse
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.backends import ModelBackend
@@ -5,9 +7,10 @@ from django.contrib.auth.hashers import make_password
 from django.db.models import Q
 from django.views.generic.base import View
 from utils.email_send import SendEmail
+from utils.mixin_utils import LoginRequiredMixin
 
 from .models import UserProfile,EmailVerifyRecord
-from .forms import LoginForm,RegisterForm,ForgetForm,PasswordModifyForm,PasswordResetForm
+from .forms import LoginForm,RegisterForm,ForgetForm,PasswordModifyForm,PasswordResetForm,ImageUploadForm,UserInfoForm
 
 
 #邮箱和用户名都可以登录
@@ -60,7 +63,7 @@ class LoginView(View):
 
 
 #登出
-class LogoutView(View):
+class LogoutView(LoginRequiredMixin,View):
     '''用户登出'''
 
     def get(self,request):
@@ -118,12 +121,12 @@ class PasswordForgetView(View):
 
 
 # 重置密码
-class PasswordResetView(View):
+class PasswordResetView(LoginRequiredMixin,View):
     '''重置密码'''
 
-    def get(self,request):
-        passwordreset_form = PasswordResetForm()
-        return render(request,'password_reset.html',{'passwordreset_form':passwordreset_form})
+    # def get(self,request):
+    #     passwordreset_form = PasswordResetForm()
+    #     return render(request,'password_reset.html',{'passwordreset_form':passwordreset_form})
 
     def post(self,request):
         passwordreset_form = PasswordResetForm(request.POST)
@@ -140,10 +143,9 @@ class PasswordResetView(View):
             else:
                 user.password = make_password(password_new1)
                 user.save()
-                logout(request)
-                return HttpResponse('密码修改成功,请重新登录')
+                return HttpResponse('{"status":"success"}', content_type='application/json')
         else:
-            return render(request,'password_reset.html',{'passwordreset_form':passwordreset_form})
+            return HttpResponse(json.dumps(passwordreset_form.errors), content_type='application/json')
 
 
 #邮箱链接验证
@@ -179,7 +181,7 @@ class EmailVerifyView(View):
 
 
 #修改密码
-class ModifyPwdView(View):
+class ModifyPwdView(LoginRequiredMixin,View):
     def post(self,request):
         passwordmodify_form = PasswordModifyForm(request.POST)
         email = request.POST.get('email', None)
@@ -194,3 +196,27 @@ class ModifyPwdView(View):
             return render(request,'password_reset.html',{'password_modify_status':True})
         else:
             return render(request, 'password_reset.html', {'passwordmodify_form': passwordmodify_form,'email':email,'password_modify_status':False})
+
+
+#用户信息
+class UserInfoView(LoginRequiredMixin,View):
+    def get(self,request):
+        return render(request,'usercenter-info.html')
+
+    # url(r'^mycourse',UserInfoView.as_view(),name='mycourse'),
+    # url(r'^fav-course',UserInfoView.as_view(),name='fav_course'),
+    # url(r'^message',UserInfoView.as_view(),name='message'),
+
+class ImageUploadView(LoginRequiredMixin,View):
+    def post(self,request):
+        imageupload_form = ImageUploadForm(request.POST,request.FILES)
+        if imageupload_form.is_valid():
+            image = imageupload_form.cleaned_data['image']
+            request.user.image = image
+            request.user.save()
+            return HttpResponse('{"status":"success"}', content_type='application/json')
+        else:
+            return HttpResponse('{"status":"fail"}', content_type='application/json')
+
+# class PasswordUploadView(View):
+

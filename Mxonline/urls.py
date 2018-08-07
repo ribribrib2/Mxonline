@@ -23,7 +23,7 @@ from users.views import IndexView
 urlpatterns = [
     url(r'^xadmin/', xadmin.site.urls),
     url(r'^captcha/', include('captcha.urls')),
-    url(r'', include('users.urls',namespace='users')),
+    url(r'^users/', include('users.urls',namespace='users')),
     url(r'^$', IndexView.as_view(), name='index'),
 ]
 
