@@ -1,37 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8cb5eaf5-55a6-48dc-aa3f-8d85430d01cc" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/apps/organization/forms.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/apps/organization/migrations/0005_courseorg_category.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/apps/organization/migrations/0006_auto_20180809_2313.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/apps/organization/urls.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/media/org/2018/08/python.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/media/org/2018/08/python_K6gS4lp.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/media/org/2018/08/北京大学.png" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/media/org/2018/08/北京大学_go1uS2S.png" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/media/org/2018/08/广州大学.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/media/org/2018/08/广州大学_WPSf0lb.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/media/org/2018/08/新东方.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/media/org/2018/08/新东方_cUp1Wwt.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/media/org/2018/08/新东方_shpwF3q.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/media/org/2018/08/新东方_uFqD2Nx.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/media/org/2018/08/浙江大学.png" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/media/org/2018/08/浙江大学_b3qF4Su.png" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/media/org/2018/08/清华大学.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/media/org/2018/08/清华大学_qzgJjaw.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/templates/base.html" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/Mxonline/settings.py" afterPath="$PROJECT_DIR$/Mxonline/settings.py" />
-      <change beforePath="$PROJECT_DIR$/Mxonline/urls.py" afterPath="$PROJECT_DIR$/Mxonline/urls.py" />
-      <change beforePath="$PROJECT_DIR$/apps/organization/adminx.py" afterPath="$PROJECT_DIR$/apps/organization/adminx.py" />
-      <change beforePath="$PROJECT_DIR$/apps/organization/models.py" afterPath="$PROJECT_DIR$/apps/organization/models.py" />
-      <change beforePath="$PROJECT_DIR$/apps/organization/views.py" afterPath="$PROJECT_DIR$/apps/organization/views.py" />
-      <change beforePath="$PROJECT_DIR$/org/2018/08/北京大学.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/org/2018/08/浙江大学.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/templates/org-list.html" afterPath="$PROJECT_DIR$/templates/org-list.html" />
-      <change beforePath="$PROJECT_DIR$/user_image/2018/08/rabbit.jpg" afterPath="" />
-    </list>
+    <list default="true" id="8cb5eaf5-55a6-48dc-aa3f-8d85430d01cc" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -101,8 +71,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/apps/organization/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="720">
+              <caret line="24" column="55" lean-forward="true" selection-start-line="24" selection-start-column="55" selection-end-line="24" selection-end-column="55" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
               </folding>
@@ -203,7 +173,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="1">
     <option name="x" value="78" />
     <option name="width" value="1782" />
     <option name="height" value="1087" />
@@ -408,7 +378,14 @@
       <option name="project" value="LOCAL" />
       <updated>1533639666331</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="improve Tips for login information">
+      <created>1533830976192</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1533830976192</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TodoView">
@@ -421,7 +398,8 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="78" y="0" width="1782" height="1087" extended-state="0" />
+    <frame x="78" y="0" width="1782" height="1087" extended-state="1" />
+    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3286119" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.45016077" sideWeight="0.50223964" order="7" side_tool="true" content_ui="tabs" />
@@ -429,7 +407,7 @@
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3286119" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.42587346" sideWeight="0.49776036" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.38621342" sideWeight="0.49776036" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17213115" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17213115" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="SciView" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -848,8 +826,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/apps/organization/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="720">
+          <caret line="24" column="55" lean-forward="true" selection-start-line="24" selection-start-column="55" selection-end-line="24" selection-end-column="55" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
           </folding>
