@@ -53,14 +53,11 @@
                         <div class="head">
                             <ul class="tab_header">
                                 <li {% if not sort %}class="active"{% endif %}><a
-                                        href="?ct={% if category %}{{ category }}{% endif %}&
-                                city={% if city_id %}{{ city_id }}{% endif %}">全部</a></li>
+                                        href="?ct={% if category %}{{ category }}{% endif %}&city={% if city_id %}{{ city_id }}{% endif %}">全部</a></li>
                                 <li {% ifequal sort 'students' %}class="active"{% endifequal %}><a
-                                        href="?sort=students&ct={% if category %}{{ category }}{% endif %}&
-                                city={% if city_id %}{{ city_id }}{% endif %}">学习人数 &#8595;</a></li>
+                                        href="?sort=students&ct={% if category %}{{ category }}{% endif %}&city={% if city_id %}{{ city_id }}{% endif %}">学习人数 &#8595;</a></li>
                                 <li {% ifequal sort 'courses' %}class="active"{% endifequal %}><a
-                                        href="?sort=courses&ct={% if category %}{{ category }}{% endif %}&
-                                city={% if city_id %}{{ city_id }}{% endif %}">课程数 &#8595;</a></li>
+                                        href="?sort=courses&ct={% if category %}{{ category }}{% endif %}&city={% if city_id %}{{ city_id }}{% endif %}">课程数 &#8595;</a></li>
                             </ul>
                         </div>
                         {% for org in all_org.object_list %}
