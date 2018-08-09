@@ -17,6 +17,7 @@ from django.conf.urls import url,include
 from extra_apps import xadmin
 from django.conf.urls.static import static
 from django.conf import settings
+from django.views.static import serve
 
 from users.views import IndexView
 
@@ -24,8 +25,11 @@ urlpatterns = [
     url(r'^xadmin/', xadmin.site.urls),
     url(r'^captcha/', include('captcha.urls')),
     url(r'^users/', include('users.urls',namespace='users')),
+    #配置上传文件的访问处理函数
+    # url(r'^media/(?P<path>.*)$', serve, {"document_root": settings.MEDIA_ROOT}),
+    url(r'', include('organization.urls',namespace='organization')),
     url(r'^$', IndexView.as_view(), name='index'),
-]
+    ]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
