@@ -50,7 +50,14 @@ class Teacher(models.Model):
     click_nums = models.IntegerField('点击数',default=0)
     fav_nums = models.IntegerField('收藏数',default=0)
     add_time = models.DateTimeField('添加时间',auto_now_add=True)
+    image = models.ImageField('教师头像', upload_to='teacher_avator/%Y/%m', max_length=100,default='teacher_avator/default.png')
 
     class Meta:
         verbose_name = '教师'
         verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.name
+
+    def get_course_num(self):
+        return self.course_set.count()

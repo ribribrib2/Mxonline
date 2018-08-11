@@ -27,7 +27,8 @@ urlpatterns = [
     url(r'^users/', include('users.urls',namespace='users')),
     #配置上传文件的访问处理函数
     # url(r'^media/(?P<path>.*)$', serve, {"document_root": settings.MEDIA_ROOT}),
-    url(r'', include('organization.urls',namespace='organization')),
+    url(r'org/', include('organization.urls',namespace='organization')),
+    url(r'course/', include('courses.urls',namespace='course')),
     url(r'^$', IndexView.as_view(), name='index'),
     ]
 

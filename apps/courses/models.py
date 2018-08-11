@@ -1,4 +1,5 @@
 from django.db import models
+from organization.models import CourseOrg,Teacher
 
 # Create your models here.
 class Course(models.Model):
@@ -8,6 +9,8 @@ class Course(models.Model):
         ("zj", "中级"),
         ("gj", "高级")
     )
+    courseorg = models.ForeignKey(CourseOrg,verbose_name='所属机构',on_delete=models.CASCADE,default='')
+    teacher = models.ForeignKey(Teacher,verbose_name='任课教师',on_delete=models.CASCADE,default='')
     name = models.CharField('课程名', max_length=50)
     desc = models.CharField('课程描述', max_length=300)
     detail = models.TextField('课程详情')

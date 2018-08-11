@@ -30,7 +30,9 @@ class CustomBackend(ModelBackend):
 #主页
 class IndexView(View):
     def get(self,request):
-        return render(request, 'index.html')
+        return render(request, 'index.html',{
+            'current_page':'index'
+        })
 
 
 #登录
