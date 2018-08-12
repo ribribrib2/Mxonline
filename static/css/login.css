@@ -48,7 +48,7 @@ a:hover{
 
 .login-box{
     width:853px;
-    margin:70px auto;
+    margin:150px auto;
 }
 .hd-login{
     position:relative;
@@ -271,7 +271,7 @@ a:hover{
 }
 .captcha1 > img{
     float:right;
-    margin-top:1px;
+    margin-top:5px;
 }
 .verify-code{
     float:left;
