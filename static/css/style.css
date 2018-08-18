@@ -2829,7 +2829,7 @@ footer .footer .line {
 }
 
 .list .group_recommend dl {
-    height: 240px;
+    height: 140px;
     padding: 20px;
     border-top: 1px solid #dcdcdc;
     padding-bottom: 40px;
@@ -2869,7 +2869,7 @@ footer .footer .line {
     position: relative;
     z-index: 1;
     width: 100%;
-    height: 445px;
+    height: 270px;
     overflow: hidden;
 }
 
@@ -3046,7 +3046,6 @@ footer .footer .line {
     height: 40px;
     overflow: hidden;
     display: block;
-    margin-top: 15px;
     margin-right: 5px;
 }
 
@@ -3100,7 +3099,7 @@ footer .footer .line {
     width: 210px;
     float: right;
     border: 1px solid #eaeaea;
-    height: 440px;
+    height: 460px;
     overflow: hidden;
 }
 
@@ -3126,7 +3125,7 @@ footer .footer .line {
 
 .groupPurchase_detail .toppro .right .pic {
     width: 150px;
-    height: 80px;
+    height: 150px;
     margin: 20px auto;
     border: 1px solid #eaeaea;
     overflow: hidden;
@@ -8188,7 +8187,7 @@ table .upload-btn {
 
 .butler-company-box .pic {
     width: 150px;
-    height: 80px;
+    height: 150px;
     margin: 20px auto;
     border: 1px solid #eaeaea;
     overflow: hidden;

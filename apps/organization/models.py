@@ -3,7 +3,6 @@ from django.db import models
 # Create your models here.
 class CityDict(models.Model):
     name = models.CharField('城市',max_length=20)
-    desc = models.CharField('描述',max_length=200)
     add_time = models.DateTimeField('添加时间',auto_now_add=True)
 
     class Meta:
@@ -25,11 +24,10 @@ class CourseOrg(models.Model):
     category = models.CharField('机构类别',max_length=20,choices=ORG_CHOICES,default='pxjg')
     click_nums = models.IntegerField('点击数',default=0)
     fav_nums = models.IntegerField('收藏数',default=0)
-    image = models.ImageField('logo',upload_to='org/%Y/%m',max_length=100)
-    address = models.CharField('机构地址',max_length=150,)
+    image = models.ImageField('logo',upload_to='org/%Y/%m',default='org/default.png',max_length=100,blank=True)
+    address = models.CharField('机构地址',max_length=150)
     city = models.ForeignKey(CityDict,verbose_name='所在城市',on_delete=models.CASCADE)
     students = models.IntegerField('学习人数', default=0)
-    couese_num = models.IntegerField('课程数', default=0)
     add_time = models.DateTimeField('添加时间',auto_now_add=True)
 
     class Meta:
@@ -38,6 +36,12 @@ class CourseOrg(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_course_count(self):
+        return self.course_set.count()
+
+    def get_teacher_count(self):
+        return self.teacher_set.count()
 
 
 class Teacher(models.Model):

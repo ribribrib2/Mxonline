@@ -89,14 +89,15 @@ class RegisterView(View):
             if UserProfile.objects.filter(email=user_email):
                 return render(request, 'register.html',{'register_form':register_form,'error_message':'该账号已经注册'})
             user_password = request.POST.get('password', None)
-            user_profile = UserProfile()
-            user_profile.username = user_email
-            user_profile.email = user_email
-            user_profile.password = make_password(user_password)
-            user_profile.is_active = False
-            user_profile.save()
-            SendEmail(user_email,'register')
-            return render(request, 'email-send.html', {'email':user_email})
+            # user_profile = UserProfile()
+            # user_profile.username = user_email
+            # user_profile.email = user_email
+            # user_profile.password = make_password(user_password)
+            # user_profile.is_active = False
+            # user_profile.save()
+            UserProfile.objects.create(username=user_email,email=user_email,password=make_password(user_password),is_active=False)
+            send_status = SendEmail(user_email,'register')
+            return render(request, 'email-send.html', {'email':user_email,'send_status':send_status})
         else:
             return render(request,'register.html',{'register_form':register_form})
 
@@ -126,10 +127,6 @@ class PasswordForgetView(View):
 class PasswordResetView(LoginRequiredMixin,View):
     '''重置密码'''
 
-    # def get(self,request):
-    #     passwordreset_form = PasswordResetForm()
-    #     return render(request,'password_reset.html',{'passwordreset_form':passwordreset_form})
-
     def post(self,request):
         passwordreset_form = PasswordResetForm(request.POST)
         if passwordreset_form.is_valid():
@@ -139,9 +136,9 @@ class PasswordResetView(LoginRequiredMixin,View):
             user_email = request.POST.get('email','')
             user = UserProfile.objects.get(email=user_email)
             if make_password(password_old) != make_password(user.password):
-                return render(request, 'password_reset.html',{'passwordreset_form': passwordreset_form, 'meg': '旧密码错误'})
+                return HttpResponse('{"status":"fail","msg":"旧密码错误"}', content_type='application/json')
             elif password_new1 != password_new2:
-                return render(request,'password_reset.html',{'passwordreset_form':passwordreset_form,'meg':'两次密码不一样'})
+                return HttpResponse('{"status":"fail","msg":"两次密码不一样"}', content_type='application/json')
             else:
                 user.password = make_password(password_new1)
                 user.save()

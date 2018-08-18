@@ -4,16 +4,11 @@
 {% block title %}公开课列表 - 慕学在线网{% endblock %}
 
 {% block custom_bread %}
-    <section>
-        <div class="wp">
-            <ul class="crumbs">
+
                 <li><a href="{% url 'index' %}">首页</a>></li>
                 <li>公开课</li>
-            </ul>
-        </div>
-    </section>
-{% endblock %}
 
+{% endblock %}
 
 {% block contain %}
     <section>
@@ -22,29 +17,29 @@
                 <div class="left layout">
                     <div class="head">
                         <ul class="tab_header">
-                            <li class="active"><a href="?sort=">最新 </a></li>
-                            <li><a href="?sort=hot">最热门</a></li>
-                            <li><a href="?sort=students">参与人数</a></li>
+                            <li {% ifequal sort '' %}class="active"{% endifequal %}><a href="?sort=">最新 </a></li>
+                            <li {% ifequal sort 'hot' %}class="active"{% endifequal %}><a href="?sort=hot">最热门</a></li>
+                            <li {% ifequal sort 'students' %}class="active"{% endifequal %}><a href="?sort=students">参与人数</a></li>
                         </ul>
                     </div>
                     <div id="inWindow">
                         <div class="tab_cont " id="content">
                             <div class="group_list">
-                                {% for course in courses.object_list %}
+                                {% for course in all_courses.object_list %}
                                     <div class="box">
                                         <a href="{% url 'course:course_detail' course.id %}">
                                             <img width="280" height="350" class="scrollLoading"
                                                  src="{{ course.image.url }}"/>
                                         </a>
                                         <div class="des">
-                                            <a href="course-detail.html">
+                                            <a href="{% url 'course:course_detail' course.id %}">
                                                 <h2>{{ course.name }}</h2>
                                             </a>
                                             <span class="fl">时长：<i class="key">{{ course.learn_times }}</i></span>
-                                            <span class="fr">学习人数：{{ course.students }}&nbsp;&nbsp;</span>
+                                            <span class="fr">学习人数：{{ course.get_learner_num }}&nbsp;&nbsp;</span>
                                         </div>
                                         <div class="bottom">
-                                            <a href="course-detail.html"><span
+                                            <a href="{% url 'course:course_detail' course.id %}"><span
                                                     class="fl">来自{{ course.courseorg.name }}</span></a>
                                             <span class="star fr  notlogin
                                         " data-favid="15">
@@ -56,14 +51,14 @@
                             </div>
                             <div class="pageturn">
                                 <ul class="pagelist">
-                                    {% if courses.has_previous %}
-                                        <li class="long"><a href="?{{ courses.previous_page_number.querystring }}"
+                                    {% if all_courses.has_previous %}
+                                        <li class="long"><a href="?{{ all_courses.previous_page_number.querystring }}"
                                                             class="prev">&lsaquo;&lsaquo;
                                             上一页</a></li>
                                     {% endif %}
-                                    {% for page in courses.pages %}
+                                    {% for page in all_courses.pages %}
                                         {% if page %}
-                                            {% ifequal page courses.number %}
+                                            {% ifequal page all_courses.number %}
                                                 <li class="active"><a class="page" href="">{{ page }}</a></li>
                                             {% else %}
                                                 <li><a href="?{{ page.querystring }}" class="page">{{ page }}</a></li>
@@ -72,8 +67,8 @@
                                             <li class="none"><a class="page" href="">...</a></li>
                                         {% endif %}
                                     {% endfor %}
-                                    {% if courses.has_next %}
-                                        <li class="long"><a href="?{{ courses.next_page_number.querystring }}"
+                                    {% if all_courses.has_next %}
+                                        <li class="long"><a href="?{{ all_courses.next_page_number.querystring }}"
                                                             class="next page">下一页 &rsaquo;&rsaquo;</a></li>
                                     {% endif %}
                                 </ul>
@@ -88,13 +83,13 @@
                             <dl>
                                 <dt>
                                     <a target="_blank" href="{% url 'course:course_detail' hot_course.id %}">
-                                        <img width="240" height="220" class="scrollLoading"
+                                        <img width="240" height="140" class="scrollLoading"
                                              src="{{ hot_course.image.url }}"/>
                                     </a>
                                 </dt>
                                 <dd>
                                     <a target="_blank" href=""><h2>{{ hot_course.name }}</h2></a>
-                                    <span class="fl">难度：<i class="key">{{ hot_course.degree }}</i></span>
+                                    <span class="fl">难度：<i class="key">{{ hot_course.get_degree_display }}</i></span>
                                 </dd>
                             </dl>
                         {% endfor %}

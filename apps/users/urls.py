@@ -10,7 +10,7 @@ urlpatterns = [
     url(r'^reset/password/$', IndexView.as_view(), name='reset_password'),
     url(r'^mycourse',IndexView.as_view(),name='mycourse'),
     url(r'^fav/course',IndexView.as_view(),name='fav_course'),
-    url(r'^message',IndexView.as_view(),name='message'),
+    url(r'^mymessage',IndexView.as_view(),name='mymessage'),
 
     url(r'^register/$', RegisterView.as_view(), name='register'),
     url(r'^login/$', LoginView.as_view(), name='login'),

@@ -15,7 +15,6 @@
 
     <script src="{% static 'js/jquery.min.js' %}" type="text/javascript"></script>
     <script src="{% static 'js/jquery-migrate-1.2.1.min.js' %}" type="text/javascript"></script>
-    {% block custom_js %}{% endblock %}
 </head>
 <body>
 <section class="headerwrap headerwrap2">
@@ -69,10 +68,16 @@
                             <span class="key">5.0</span>
                         </p>
                     </div>
+
                     <div class="btn fr collectionbtn  notlogin
                  " data-favid="22" data-fav-type="1">
-                        收藏
+                        {% if has_fav_org %}
+                            已收藏
+                        {% else %}
+                            收藏
+                        {% endif %}
                     </div>
+
                 </div>
             </div>
         </div>
@@ -126,24 +131,24 @@
 <script src="{% static 'js/plugins/queryCity/js/public.js' %}" type="text/javascript"></script>
 <script type="text/javascript" src="{% static 'js/plugins/jquery.raty.js' %}"></script>
 
-{% block custom_js_bottom %}{% endblock %}
-<script type="text/javascript">
+{% block custom_js %}
+        <script type="text/javascript">
     //收藏分享
     //收藏分享
     function add_fav(current_elem, fav_id, fav_type) {
         $.ajax({
             cache: false,
             type: "POST",
-            url: "/org/add_fav/",
+            url: "{% url 'organization:add_fav' %}",
             data: {'fav_id': fav_id, 'fav_type': fav_type},
             async: true,
             beforeSend: function (xhr, settings) {
-                xhr.setRequestHeader("X-CSRFToken", "5I2SlleZJOMUX9QbwYLUIAOshdrdpRcy");
+                xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
             },
             success: function (data) {
                 if (data.status == 'fail') {
                     if (data.msg == '用户未登录') {
-                        window.location.href = "login.html";
+                        window.location.href = "{% url 'users:login' %}";
                     } else {
                         alert(data.msg)
                     }
@@ -156,8 +161,9 @@
     }
 
     $('.collectionbtn').on('click', function () {
-        add_fav($(this), 1, 2);
+        add_fav($(this), {{ org.id }}, 2);
     });
+
 
     $(function () {
         var $precision = $('.precision'),
@@ -220,6 +226,7 @@
         });
     });
 </script>
+{% endblock %}
 
 </body>
 </html>

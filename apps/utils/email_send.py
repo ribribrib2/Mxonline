@@ -27,18 +27,14 @@ def SendEmail(email,send_type = 'register'):
         Email_title = 'Mxonline账号注册激活链接'
         Email_body = '请点击下发链接激活账号:http://127.0.0.1:8000/email-verify/{0}'.format(email_verifyrecied.code)
 
-        send_status = send_mail(Email_title,Email_body,DEFAULT_FROM_EMAIL,[email])
-        if send_status:
-            print('发送成功')
-            pass
+        return send_mail(Email_title,Email_body,DEFAULT_FROM_EMAIL,[email])
+
 
     if send_type == 'forget':
         Email_title = 'Mxonline账号找回密码链接'
         Email_body = '请点击下发链接激活账号:http://127.0.0.1:8000/email-verify/{0}'.format(email_verifyrecied.code)
 
-        send_status = send_mail(Email_title, Email_body, DEFAULT_FROM_EMAIL, [email])
-        if send_status:
-            print('发送成功')
-            pass
+        return send_mail(Email_title, Email_body, DEFAULT_FROM_EMAIL, [email])
+
 
 

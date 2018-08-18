@@ -8,7 +8,7 @@ class UserAsk(models.Model):
     '''用户咨询'''
     name = models.CharField('姓名',max_length=20)
     mobile = models.CharField('手机',max_length=11)
-    course_name = models.CharField('课程名',max_length=50)
+    course_name = models.ForeignKey(Course,verbose_name='课程名',on_delete=models.CASCADE,max_length=50)
     add_time = models.DateTimeField('添加时间',auto_now_add=True)
 
     class Meta:
@@ -40,7 +40,7 @@ class UserFavorite(models.Model):
     )
 
     user = models.ForeignKey(UserProfile,verbose_name='用户',on_delete=models.CASCADE)
-    fav_id = models.IntegerField('数据id',default=0)
+    fav_id = models.IntegerField('数据ID',default=0)
     fav_type = models.IntegerField(verbose_name='收藏类型',choices=FAV_TYPE,default=1)
     add_time = models.DateTimeField('添加时间', auto_now_add=True)
 
@@ -69,3 +69,6 @@ class UserCourse(models.Model):
     class Meta:
         verbose_name = '用户课程'
         verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return '{}学习{}'.format(self.user,self.course)
